@@ -9,7 +9,8 @@ export default class AuthService extends EventEmitter{
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                redirectUrl: 'https://readingwithannie.herokuapp.com/login',
+               // redirectUrl: 'https://readingwithannie.herokuapp.com/login',
+                redirect: false,
                 responseType: 'token'
             }
         });
@@ -37,7 +38,6 @@ export default class AuthService extends EventEmitter{
     login() {
         // Call the show method to display the widget.
         this.lock.show();
-        console.log(this);
     }
 
     loggedIn() {
