@@ -5,13 +5,11 @@ import { EventEmitter } from 'events';
 
 export default class AuthService extends EventEmitter{
     constructor(clientId, domain) {
-        console.log(clientId)
-        console.log(domain)
         super();
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                redirect: false,
+                redirectUrl: 'https://readingwithannie.herokuapp.com/login',
                 responseType: 'token'
             }
         });
