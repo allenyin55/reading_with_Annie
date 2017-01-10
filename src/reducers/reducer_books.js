@@ -1,5 +1,5 @@
 import { FETCH_BOOKS, FETCH_A_BOOK, GET_BOOK_INFO } from '../actions/index';
-const INITIAL_STATE = { all: [], book: null, bookInfo:null};
+const INITIAL_STATE = { all: [], book: null, bookInfo:null, auth_redirect: null};
 
 export default function (state = INITIAL_STATE, action) {
     switch(action.type){
