@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A simple book review apps that allow multiple users",
   "main": "index.js",
+  "engines": {
+    "node": "7.3.0"
+  },
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
     "start": "node server.js",
