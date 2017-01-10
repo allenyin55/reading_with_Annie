@@ -9,7 +9,7 @@ import AddReview from './components/review_new';
 import AuthService from './utils/AuthService'
 import Login from './components/log_in';
 
-const auth = new AuthService('K2UDmb55IjNcvJMDyaVzTBWh9w6uCdb9', 'hyin775.auth0.com');
+const auth = new AuthService('2gpMPdJbo2GGJGbXjk3HvNLD0GwqyXtK', 'app61940835.auth0.com');
 
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {

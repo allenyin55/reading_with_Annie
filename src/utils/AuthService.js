@@ -9,9 +9,11 @@ export default class AuthService extends EventEmitter {
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
+                redirectUrl: `${window.location.origin}/login`,
                 responseType: 'token'
             }
-        });
+        })
+
         // Add callback for lock `authenticated` event
         this.lock.on('authenticated', this._doAuthentication.bind(this));
         // Add callback for lock `authorization_error` event
@@ -22,9 +24,8 @@ export default class AuthService extends EventEmitter {
 
     _doAuthentication(authResult){
         // Saves the user token
-        console.log(authResult)
+        console.log(authResult);
         this.setToken(authResult.idToken)
-        this.emit('authenticated', authResult)
         browserHistory.replace('/books');
         // navigate to the home route
         // Async loads the user profile data
