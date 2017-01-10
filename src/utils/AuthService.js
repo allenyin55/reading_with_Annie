@@ -9,7 +9,8 @@ export default class AuthService extends EventEmitter{
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                redirectUrl: 'https://readingwithannie.herokuapp.com/login',
+                //redirectUrl: 'https://readingwithannie.herokuapp.com/login',
+                redirect: false,
                 responseType: 'token'
             }
         });
@@ -47,6 +48,7 @@ export default class AuthService extends EventEmitter{
 
     setToken(idToken) {
         // Saves user token to local storage
+        console.log(idToken);
         localStorage.setItem('id_token', idToken)
     }
 
