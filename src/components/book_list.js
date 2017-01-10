@@ -4,6 +4,7 @@ import { fetchBooks } from '../actions/index';
 import {Button} from 'react-bootstrap'
 import AuthService from '../utils/AuthService'
 import { Link } from 'react-router';
+import moment from 'moment-timezone';
 
 class BooksList extends Component {
 
@@ -43,6 +44,7 @@ class BooksList extends Component {
                          </Link>
                      </td>
                     <td>{book.bookinfo.items[0].volumeInfo.authors[0]}</td>
+                    <td>{moment.tz(book.dateadded, "Zulu").tz("America/Los_Angeles").format().substring(0, 10)}</td>
                 </tr>
             );
         })
