@@ -44,7 +44,6 @@ class BooksList extends Component {
                          </Link>
                      </td>
                     <td>{book.bookinfo.items[0].volumeInfo.authors[0]}</td>
-                    <td>{moment.tz(book.dateadded, "Zulu").tz("America/Los_Angeles").format().substring(0, 10)}</td>
                 </tr>
             );
         })
