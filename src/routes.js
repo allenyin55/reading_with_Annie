@@ -19,6 +19,14 @@ const requireAuth = (nextState, replace) => {
     }
 };
 
+// OnEnter for callback url to parse access_token
+const parseAuthHash = (nextState, replace) => {
+    if (nextState.location.hash) {
+        auth.parseHash(nextState.location.hash)
+        replace({ pathname: '/' })
+    }
+}
+
 const routes = (
     <Route path="/" component={App} auth={auth}>
         <IndexRedirect to="/books" />
@@ -28,6 +36,7 @@ const routes = (
         <Route path="books/:id/edit/:review_id" component={BookEdit}/>
         <Route path="books/:id/addReview" component={AddReview}/>
         <Route path="login" component={Login} />
+        <Route path="login" onEnter={parseAuthHash} />
     </Route>
 );
 

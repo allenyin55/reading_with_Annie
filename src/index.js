@@ -6,10 +6,10 @@ import { Router, browserHistory } from 'react-router';
 import reducers from './reducers';
 import routes from './routes';
 import promise from 'redux-promise';
-import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk'
 import {persistStore, autoRehydrate} from 'redux-persist'
 
-const store = createStore(reducers, {},compose(autoRehydrate(), applyMiddleware(promise)));
+const store = createStore(reducers, {},compose(autoRehydrate(), applyMiddleware(promise, thunkMiddleware)));
 persistStore(store);
 //qpersistStore(store, config, callback).purge() //this is to purge all the saved states in the local storage
 
