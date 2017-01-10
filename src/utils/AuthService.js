@@ -14,7 +14,7 @@ export default class AuthService extends EventEmitter{
             }
         });
         // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this));
+        this.lock.on('hash_parsed', this._doAuthentication.bind(this));
         // binds login functions to keep this context
         this.login = this.login.bind(this)
     }
