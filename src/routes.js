@@ -13,7 +13,7 @@ const auth = new AuthService('K2UDmb55IjNcvJMDyaVzTBWh9w6uCdb9', 'hyin775.auth0.
 
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {
-    console.log("adf")
+    console.log(auth);
     /*if (!auth.loggedIn()) {
         replace({ pathname: '/login' })
     }*/
