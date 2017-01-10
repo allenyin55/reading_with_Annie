@@ -9,20 +9,18 @@ export default class AuthService extends EventEmitter{
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                redirectUrl: 'https://readingwithannie.herokuapp.com',
+                redirectUrl: 'https://readingwithannie.herokuapp.com/login',
                 responseType: 'token'
             }
         });
         // Add callback for lock `authenticated` event
-        this.lock.on('hash_parsed', this._doAuthentication.bind(this));
+        this.lock.on('authenticated', this._doAuthentication.bind(this));
         // binds login functions to keep this context
         this.login = this.login.bind(this)
     }
 
     _doAuthentication(authResult) {
-        console.log(authResult);
         // Saves the user token
-        console.log(browserHistory);
         this.setToken(authResult.idToken);
         // navigate to the home route
         browserHistory.replace('/books');
