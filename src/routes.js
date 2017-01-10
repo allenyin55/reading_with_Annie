@@ -12,11 +12,11 @@ import Login from './components/log_in';
 const auth = new AuthService('K2UDmb55IjNcvJMDyaVzTBWh9w6uCdb9', 'hyin775.auth0.com');
 
 // validate authentication for private routes
-const requireAuth = (nextState, replace) => {
+/*const requireAuth = (nextState, replace) => {
     if (!auth.loggedIn()) {
         replace({ pathname: '/login' })
     }
-};
+};*/
 
 const routes = (
     <Route path="/" component={App} auth={auth}>
