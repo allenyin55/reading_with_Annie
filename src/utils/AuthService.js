@@ -23,9 +23,8 @@ export default class AuthService extends EventEmitter{
         // Saves the user token
         this.setToken(authResult.idToken);
         // navigate to the home route
-        console.log("passed setToken");
-        browserHistory.replace('/books');
         console.log(browserHistory);
+        browserHistory.replace('/books');
         // Async loads the user profile data
         this.lock.getProfile(authResult.idToken, (error, profile) => {
             if (error) {
