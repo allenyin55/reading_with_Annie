@@ -9,8 +9,7 @@ export default class AuthService extends EventEmitter{
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                //redirectUrl: 'https://readingwithannie.herokuapp.com/login',
-                redirect: false,
+                redirectUrl: 'https://readingwithannie.herokuapp.com/login',
                 responseType: 'token'
             }
         });
