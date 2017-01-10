@@ -4,7 +4,6 @@ import { fetchBooks } from '../actions/index';
 import {Button} from 'react-bootstrap'
 import AuthService from '../utils/AuthService'
 import { Link } from 'react-router';
-import moment from 'moment-timezone';
 
 class BooksList extends Component {
 
