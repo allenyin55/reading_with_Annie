@@ -7,7 +7,8 @@ export class Login extends React.Component {
     constructor(props) {
         super(props)
         this.props.auth.lock.on('authenticated', (authResult) => {
-            this.context.router.push('/home')
+            console.log(authResult);
+            this.context.router.push('/books')
         });
     }
 

@@ -2,9 +2,12 @@ import decode from 'jwt-decode';
 
 export function getTokenExpirationDate(token) {
     const decoded = decode(token);
+    console.log("before .exp")
     if(!decoded.exp) {
+        console.log("in .exp")
         return null
     }
+    console.log("after .exp")
     const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
     date.setUTCSeconds(decoded.exp);
     return date
