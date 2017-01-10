@@ -3,6 +3,14 @@ import {ButtonToolbar, Button} from 'react-bootstrap'
 import AuthService from '../utils/AuthService'
 
 export class Login extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.props.auth.lock.on('authenticated', (authResult) => {
+            this.context.router.push('/home')
+        });
+    }
+
     static contextTypes = {
         router: T.object
     };

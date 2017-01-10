@@ -9,12 +9,16 @@ export default class AuthService extends EventEmitter {
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                redirectUrl: `${window.location.origin}/login`,
+                params:{
+                    state: {
+                        "return_url": "https://yoursite.com/home"
+                    }
+                },
                 responseType: 'token'
             }
-        })
+        });
         // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this))
+        this.lock.on('authenticated', this._doAuthentication.bind(this));
         // Add callback for lock `authorization_error` event
         this.lock.on('authorization_error', this._authorizationError.bind(this))
         // binds login functions to keep this context
@@ -23,10 +27,10 @@ export default class AuthService extends EventEmitter {
 
     _doAuthentication(authResult){
         // Saves the user token
+        console.log(authResult)
         this.setToken(authResult.idToken)
-        console.log("before",Date())
-        window.setTimeout(browserHistory.replace('/books'), 20000)
-        console.log("after", Date())
+        this.emit('authenticated', authResult)
+        browserHistory.replace('/books');
         // navigate to the home route
         // Async loads the user profile data
         this.lock.getProfile(authResult.idToken, (error, profile) => {
@@ -50,6 +54,7 @@ export default class AuthService extends EventEmitter {
 
     loggedIn(){
         // Checks if there is a saved token and it's still valid
+        console.log(this)
         const token = this.getToken()
         return !!token && !isTokenExpired(token)
     }
