@@ -9,11 +9,6 @@ export default class AuthService extends EventEmitter {
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
-                params:{
-                    state: {
-                        "return_url": "https://yoursite.com/home"
-                    }
-                },
                 responseType: 'token'
             }
         });
@@ -54,7 +49,6 @@ export default class AuthService extends EventEmitter {
 
     loggedIn(){
         // Checks if there is a saved token and it's still valid
-        console.log(this)
         const token = this.getToken()
         return !!token && !isTokenExpired(token)
     }
