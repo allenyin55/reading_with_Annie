@@ -1,31 +1,33 @@
-import Auth0Lock from 'auth0-lock';
-import { browserHistory } from 'react-router';
-import { isTokenExpired } from './jwtHelper';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events'
+import { isTokenExpired } from './jwtHelper'
+import Auth0Lock from 'auth0-lock'
+import { browserHistory } from 'react-router'
 
-export default class AuthService extends EventEmitter{
+export default class AuthService extends EventEmitter {
     constructor(clientId, domain) {
-        super();
+        super()
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
                 redirectUrl: `${window.location.origin}/login`,
                 responseType: 'token'
             }
-        });
+        })
         // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this));
+        this.lock.on('authenticated', this._doAuthentication.bind(this))
         // Add callback for lock `authorization_error` event
         this.lock.on('authorization_error', this._authorizationError.bind(this))
         // binds login functions to keep this context
         this.login = this.login.bind(this)
     }
 
-    _doAuthentication(authResult) {
+    _doAuthentication(authResult){
         // Saves the user token
-        this.setToken(authResult.idToken);
+        this.setToken(authResult.idToken)
+        console.log("before",Date())
+        window.setTimeout(browserHistory.replace('/books'), 2000)
+        console.log("after", Date())
         // navigate to the home route
-        browserHistory.replace('/books');
         // Async loads the user profile data
         this.lock.getProfile(authResult.idToken, (error, profile) => {
             if (error) {
@@ -33,7 +35,7 @@ export default class AuthService extends EventEmitter{
             } else {
                 this.setProfile(profile)
             }
-        });
+        })
     }
 
     _authorizationError(error){
@@ -43,43 +45,40 @@ export default class AuthService extends EventEmitter{
 
     login() {
         // Call the show method to display the widget.
-        this.lock.show();
-        console.log(this.state);
+        this.lock.show()
     }
 
-    loggedIn() {
+    loggedIn(){
         // Checks if there is a saved token and it's still valid
-        console.log(this.state);
-        const token = this.getToken();
+        const token = this.getToken()
         return !!token && !isTokenExpired(token)
     }
 
-    setToken(idToken) {
-        // Saves user token to local storage
-        console.log(idToken);
-        localStorage.setItem('id_token', idToken)
-    }
-
-    getToken() {
-        // Retrieves the user token from local storage
-        return localStorage.getItem('id_token')
-    }
-
-    setProfile(profile) {
-        // Saves profile data to local storage
+    setProfile(profile){
+        // Saves profile data to localStorage
         localStorage.setItem('profile', JSON.stringify(profile))
         // Triggers profile_updated event to update the UI
         this.emit('profile_updated', profile)
     }
 
-    getProfile() {
-        // Retrieves the profile data from local storage
+    getProfile(){
+        // Retrieves the profile data from localStorage
         const profile = localStorage.getItem('profile')
         return profile ? JSON.parse(localStorage.profile) : {}
     }
 
-    logout() {
-        // Clear user token and profile data from local storage
+    setToken(idToken){
+        // Saves user token to localStorage
+        localStorage.setItem('id_token', idToken)
+    }
+
+    getToken(){
+        // Retrieves the user token from localStorage
+        return localStorage.getItem('id_token')
+    }
+
+    logout(){
+        // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
         localStorage.removeItem('profile');
     }

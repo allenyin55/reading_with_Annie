@@ -11,6 +11,12 @@ const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books
 const GOOGLE_BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 const GOOGLE_BOOK_API_KEY = "AIzaSyCJN2MfmPezrjAR1Ji02fO-Lwtmp0Umt_c";
 
+// Login actions
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+
+
 export function fetchBooks() {
     const request = axios.get(POSTGRES_SERVER_URL);
 
