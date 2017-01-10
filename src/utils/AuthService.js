@@ -7,13 +7,12 @@ export default class AuthService extends EventEmitter {
     constructor(clientId, domain) {
         super()
         // Configure Auth0
-        this.lock = new Auth0Lock(clientId, domain, {
-            auth: {
-                redirectUrl: `${window.location.origin}/login`,
-                responseType: 'token'
-            }
-        })
+        this.lock = new Auth0Lock(clientId, domain);
 
+        this.lock.on('authenticated', func);
+        function func() {
+            console.log(this);
+        }
         // Add callback for lock `authenticated` event
         this.lock.on('authenticated', this._doAuthentication.bind(this));
         // Add callback for lock `authorization_error` event
@@ -67,13 +66,11 @@ export default class AuthService extends EventEmitter {
     }
 
     setToken(idToken){
-        console.log("setToken:", idToken)
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
 
     getToken(){
-        console.log('getToken')
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
     }
