@@ -1,3 +1,7 @@
+//This component is not working correctly when connect
+//to the parent component, therefore deprecated
+
+
 import React from 'react';
 import moment from 'moment-timezone';
 import { Link } from 'react-router';
@@ -7,7 +11,7 @@ export default class ReviewItem extends React.Component{
         const {profile} = this.props;
         const {review} = this.props;
         const uniqueKey = review.review_id; // a unique key for the li elements
-        const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format()
+        const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format();
         //if the reviewer mat;ches the user name,
         //authorize them to edit their review
         if (review.reviewer === profile.name) {

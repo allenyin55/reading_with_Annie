@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { fetchABook, deleteBook} from '../actions/index';
 import { Link } from 'react-router';
 import AuthService from '../utils/AuthService';
-import ReviewItem from './review_item';
+//import ReviewItem from './review_item'; deprecated
+import moment from 'moment-timezone';
 
 class BookShow extends Component{
 
@@ -37,11 +38,21 @@ class BookShow extends Component{
 
     renderReview() {
         const {reviews} = this.props.bookObject;
+        const {profile} = this.state;
         return reviews.map((review) => {
             const uniqueKey = review.review_id; // a unique key for the li elements
+            const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format();
             return (
-                <div key={uniqueKey}>
-                    <ReviewItem review={review} profile={this.state.profile}/>
+                <div className="list-group-item list-group-item-action flex-column align-items-start" key={uniqueKey}>
+                    <div className="d-flex w-100 justify-content-start">
+                        <img className="rounded p-2 align-self-start" src={profile.picture}/>
+                        <div className="p-2">
+                            <h5 className="mb-1">{review.reviewer}'s review</h5>
+                            <p className="mb-1">{review.review}</p>
+                            <small>edited on {PSTTime.substring(0, 10)}</small>
+                        </div>
+                        <Link className="ml-auto p-2" to={location.pathname + "/edit/"+uniqueKey}>Edit Review</Link>
+                    </div>
                 </div>
             );
         })
