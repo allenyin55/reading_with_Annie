@@ -52,6 +52,7 @@ export default class AuthService extends EventEmitter{
 
     getToken() {
         // Retrieves the user token from local storage
+        console.log(localStorage);
         return localStorage.getItem('id_token')
     }
 
