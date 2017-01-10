@@ -1,6 +1,7 @@
 import decode from 'jwt-decode';
 
 export function getTokenExpirationDate(token) {
+    console.log("start of the getToken");
     const decoded = decode(token);
     if(!decoded.exp) {
         return null
