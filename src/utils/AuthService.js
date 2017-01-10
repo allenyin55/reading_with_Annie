@@ -49,9 +49,7 @@ export default class AuthService extends EventEmitter {
 
     loggedIn(){
         // Checks if there is a saved token and it's still valid
-        console.log("before getToken", Date())
-        const token = setTimeout(this.getToken(), 2000);
-        console.log("after getToken", Date())
+        const token = this.getToken()
         return !!token && !isTokenExpired(token)
     }
 
@@ -69,11 +67,13 @@ export default class AuthService extends EventEmitter {
     }
 
     setToken(idToken){
+        console.log("setToken:", idToken)
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
 
     getToken(){
+        console.log('getToken')
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
     }
