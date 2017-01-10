@@ -4,12 +4,12 @@ export function getTokenExpirationDate(token) {
     console.log("start of the getToken");
     const decoded = decode(token);
     if(!decoded.exp) {
+        console.log('return null')
         return null
     }
 
     const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
     date.setUTCSeconds(decoded.exp);
-    console.log("end of the getToken")
     return date
 }
 
