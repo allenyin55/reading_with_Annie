@@ -14,14 +14,16 @@ const auth = new AuthService('K2UDmb55IjNcvJMDyaVzTBWh9w6uCdb9', 'hyin775.auth0.
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {
     if (!auth.loggedIn()) {
-        replace({ pathname: '/login' })
+        console.log("next:", nextState);
+        console.log("replace", replace);
+        //replace({ pathname: '/login' })
     }
 };
 
 const routes = (
     <Route path="/" component={App} auth={auth}>
         <IndexRedirect to="/books" />
-        <Route path="books" component={BookList} />
+        <Route path="books" component={BookList} onEnter={requireAuth}/>
         <Route path='books/new' component={BookNew}/>
         <Route path="books/:id" component={BookShow}/>
         <Route path="books/:id/edit/:review_id" component={BookEdit}/>
