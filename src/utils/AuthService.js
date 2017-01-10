@@ -49,7 +49,9 @@ export default class AuthService extends EventEmitter {
 
     loggedIn(){
         // Checks if there is a saved token and it's still valid
-        const token = this.getToken()
+        console.log("before getToken", Date())
+        const token = setTimeout(this.getToken(), 2000);
+        console.log("after getToken", Date())
         return !!token && !isTokenExpired(token)
     }
 
