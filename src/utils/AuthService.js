@@ -14,7 +14,7 @@ export default class AuthService extends EventEmitter {
                 params: {
                     state: "foo"
                 },
-                responseType: 'token'
+                responseType: 'id_token'
             }
         });
 

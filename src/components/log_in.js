@@ -22,7 +22,7 @@ export class Login extends React.Component {
 
     render() {
         const { auth }  = this.props;
-        console.log(window.location.hash);
+
         return (
             <div className="text-xl-center">
                 <h2>Reading with Annie</h2>

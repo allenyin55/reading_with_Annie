@@ -18,6 +18,7 @@ const requireAuth = (nextState, replace) => {
     }
 };
 
+console.log(window.location);
 
 const routes = (
     <Route path="/" component={App} auth={auth}>
