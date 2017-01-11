@@ -6,12 +6,12 @@ import { browserHistory } from 'react-router'
 export default class AuthService extends EventEmitter {
     constructor(clientId, domain) {
         localStorage.setItem("testing", "this is a test");
-        super()
+        super();
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
             auth: {
                 redirectUrl: `${window.location.origin}/login`,
-                responseType: 'token'
+                responseType: 'code'
             }
         });
 
