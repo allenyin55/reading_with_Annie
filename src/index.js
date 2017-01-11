@@ -7,7 +7,7 @@ import reducers from './reducers';
 import routes from './routes';
 import promise from 'redux-promise';
 import thunkMiddleware from 'redux-thunk'
-import {persistStore, autoRehydrate} from 'redux-persist'
+import {persistStore, autoRehydrate} from 'redux-persist';
 
 const store = createStore(reducers, {},compose(autoRehydrate(), applyMiddleware(promise, thunkMiddleware)));
 persistStore(store);
