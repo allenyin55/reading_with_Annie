@@ -17,7 +17,7 @@ class BookEdit extends Component{
         this.props.editBook(props)
             .then(()=>{
                 //blog Book has been created, navigate the user to the index
-                this.context.router.push("/books/"+this.props.bookObject.book[0].id);
+                this.context.router.push("/books/"+this.props.bookObject.book.id);
             });
     }
 
@@ -37,7 +37,7 @@ class BookEdit extends Component{
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>
-                <Link to="/" className="btn btn-danger">Cancel</Link>
+                <Link to={`/books/${this.props.bookObject.book.id}`} className="btn btn-danger">Cancel</Link>
             </form>
         );
     }

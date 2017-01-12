@@ -14,6 +14,8 @@ export default class ReviewItem extends React.Component{
         const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format();
         //if the reviewer mat;ches the user name,
         //authorize them to edit their review
+        console.log("reviewer: ", review.reviewer);
+        console.log("profile: ", profile)
         if (review.reviewer === profile.name) {
             return (
                <div className="list-group-item list-group-item-action flex-column align-items-start">

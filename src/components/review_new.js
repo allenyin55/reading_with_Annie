@@ -28,7 +28,7 @@ class AddReview extends Component{
 
     onSubmit(props){
         const { profile } = this.state;
-        props.reviewer = profile.name;
+        props.reviewer = profile;
         props.dateEdited = new Date().toUTCString();
         props.id = this.props.params.id;
         this.props.createReview(props)
@@ -48,7 +48,7 @@ class AddReview extends Component{
 
         return(
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <h3>Add a review on {this.props.bookObject.book[0].title}</h3>
+                <h3>Add a review on {this.props.bookObject.book.title}</h3>
                 <div className={`form-group ${review.touched && review.invalid ? 'has-danger' : ''}`}>
                     <label>review</label>
                     <textarea className="form-control" { ...review }/>

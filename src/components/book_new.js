@@ -29,7 +29,8 @@ class BooksNew extends Component{
 
     onSubmit(props){
         const { profile } = this.state;
-        props.reviewer = profile.name;
+        props.reviewer = profile;
+        console.log(props.reviewer);
         props.dateAdded = new Date().toUTCString();
         props.dateEdited = new Date().toUTCString();
         this.props.getBookInfo(props.title)

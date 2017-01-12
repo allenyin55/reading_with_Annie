@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchABook, deleteBook} from '../actions/index';
+import { fetchABook, deleteBook, deleteReview} from '../actions/index';
 import { Link } from 'react-router';
 import AuthService from '../utils/AuthService';
 //import ReviewItem from './review_item'; deprecated
@@ -31,9 +31,22 @@ class BookShow extends Component{
         this.props.fetchABook(this.props.params.id);
     }
 
-    onDeleteClick(){
-        this.props.deleteBook(this.props.params.id)
+    onDeleteBookClick(){
+        if(confirm('Are you sure you want delete the whole book?')) {
+            this.props.deleteBook(this.props.params.id)
             .then(() => {this.context.router.push('/');});
+        }
+    }
+
+    onDeleteReviewClick(review_id){
+       const book = {
+           book_id: this.props.params.id,
+           review_id: review_id
+       };
+        if(confirm('Are you sure you want to delete this review?')) {
+            this.props.deleteReview(book)
+                .then(() => {window.location.reload()});
+        }
     }
 
     renderReview() {
@@ -42,19 +55,43 @@ class BookShow extends Component{
         return reviews.map((review) => {
             const uniqueKey = review.review_id; // a unique key for the li elements
             const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format();
-            return (
-                <div className="list-group-item list-group-item-action flex-column align-items-start" key={uniqueKey}>
-                    <div className="d-flex w-100 justify-content-start">
-                        <img className="rounded p-2 align-self-start" src={profile.picture}/>
-                        <div className="p-2">
-                            <h5 className="mb-1">{review.reviewer}'s review</h5>
-                            <p className="mb-1">{review.review}</p>
-                            <small>edited on {PSTTime.substring(0, 10)}</small>
+            const reviewer = JSON.parse(review.reviewer);
+            if (reviewer.name === profile.name) {
+                return (
+                    <div className="list-group-item list-group-item-action flex-column align-items-start"
+                         key={uniqueKey}>
+                        <div className="d-flex w-100 justify-content-start">
+                            <img className="rounded p-2 align-self-start headShot" src={reviewer.picture}/>
+                            <div className="p-2">
+                                <h5 className="mb-1">{reviewer.name}'s review</h5>
+                                <p className="mb-1">{review.review}</p>
+                                <small>edited on {PSTTime.substring(0, 10)}</small>
+                            </div>
+                            <Link className="ml-auto p-2" to={location.pathname + "/edit/" + uniqueKey}>
+                                Edit Review
+                            </Link>
+                            <div className="p-2" id="delete_review" onClick={this.onDeleteReviewClick.bind(this, uniqueKey)}>
+                                Delete
+                            </div>
                         </div>
-                        <Link className="ml-auto p-2" to={location.pathname + "/edit/"+uniqueKey}>Edit Review</Link>
                     </div>
-                </div>
-            );
+                );
+            }
+            else {
+                return (
+                    <div className="list-group-item list-group-item-action flex-column align-items-start"
+                         key={uniqueKey}>
+                        <div className="d-flex w-100 justify-content-start">
+                            <img className="rounded p-2 align-self-start headShot" src={reviewer.picture}/>
+                            <div className="p-2">
+                                <h5 className="mb-1">{reviewer.name}'s review</h5>
+                                <p className="mb-1">{review.review}</p>
+                                <small>edited on {PSTTime.substring(0, 10)}</small>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
         })
     }
 
@@ -66,6 +103,25 @@ class BookShow extends Component{
 
         const { book } = this.props.bookObject;
 
+        if(this.props.bookObject.reviews.length==0){
+            return(
+                <div className="d-flex justify-content-between">
+                    <Link to="/">
+                        <button className="btn btn-primary">
+                            Back to Index
+                        </button>
+                    </Link>
+                    <h2 className="">There is no reivews for {book.title}</h2>
+                    <Link to={location.pathname+"/addReview"}>
+                        <button className="btn btn-primary">
+                            Add a new Review
+                        </button>
+                    </Link>
+                </div>
+                )
+        }
+
+
         return (
             <div>
                 <div className="d-flex justify-content-between">
@@ -75,12 +131,12 @@ class BookShow extends Component{
                                 Back to Index
                             </button>
                         </Link>
-                        <h3>{book[0].title}</h3>
+                        <h3>{book.title}</h3>
                     </div>
                     <div className="d-flex flex-column">
                         <button
                             className="btn btn-danger"
-                            onClick={this.onDeleteClick.bind(this)}>
+                            onClick={this.onDeleteBookClick.bind(this)}>
                             Delete Book
                         </button>
                         <Link to={location.pathname+"/addReview"}>
@@ -102,4 +158,4 @@ function mapStateToProps(state) {
     return {bookObject: state.books.book};
 }
 
-export default connect(mapStateToProps, { fetchABook, deleteBook})(BookShow);
+export default connect(mapStateToProps, { fetchABook, deleteBook, deleteReview})(BookShow);

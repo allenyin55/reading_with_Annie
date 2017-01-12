@@ -5,16 +5,12 @@ export const CREATE_BOOK = "CREATE_BOOK";
 export const FETCH_A_BOOK = "FETCH_A_BOOK";
 export const CREATE_REVIEW = "CREATE_REVIEW";
 export const EDIT_BOOK = "EDIT_BOOK";
+export const DELETE_REVIEW = "DELETE_REVIEW";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const GET_BOOK_INFO = "GET_BOOK_INFO";
 const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books';
 const GOOGLE_BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 const GOOGLE_BOOK_API_KEY = "AIzaSyCJN2MfmPezrjAR1Ji02fO-Lwtmp0Umt_c";
-
-// Login actions
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
 
 
 export function fetchBooks() {
@@ -56,8 +52,19 @@ export function fetchABook(id) {
 export function editBook(props) {
     const request = axios.put(`${POSTGRES_SERVER_URL}/${props.id}`, props);
 
-    return{
+    return {
         type: EDIT_BOOK,
+        payload: request
+    }
+}
+
+export function deleteReview(book) {
+
+    console.log(`${POSTGRES_SERVER_URL}/${book.book_id}/deleteReview`);
+    const request = axios.post(`${POSTGRES_SERVER_URL}/${book.book_id}/deleteReview`, book);
+
+    return{
+        type: DELETE_REVIEW,
         payload: request
     }
 }
