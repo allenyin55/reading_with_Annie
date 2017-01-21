@@ -17,7 +17,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <h2 className="text-xl-center">
-                    <img className="rounded" style={{width: 650+'px'}} src="http://localhost:3000/images/Ammie.jpg" />
+                    <img className="rounded" style={{width: 650+'px'}} src="https://readingwithannieapi.herokuapp.com/images/Ammie.jpg" />
                 </h2>
                 {children}
                 <footer style={{marginTop:10+"rem"}}></footer>
