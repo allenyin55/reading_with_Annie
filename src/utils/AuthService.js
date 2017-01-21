@@ -9,13 +9,21 @@ export default class AuthService extends EventEmitter {
         super();
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
-            auth: {
-                redirectUrl: `${window.location.origin}/login`,
-                params:{
-                  scope: "openid"
-                },
-                responseType: 'id_token'
-            }
+          theme: {
+            logo:  'http://localhost:3000/images/Annie.jpg',
+            primaryColor: '#31324F'
+          },
+          socialButtonStyle: 'small',
+          languageDictionary: {
+            title: "Reading with Annie"
+          },
+          auth: {
+            redirectUrl: `${window.location.origin}/login`,
+            params:{
+              scope: "openid"
+            },
+            responseType: 'id_token'
+          }
         });
 
         // Add callback for lock `authenticated` event

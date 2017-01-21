@@ -15,12 +15,13 @@ export default class App extends React.Component {
         }
 
         return (
-            <Jumbotron>
+            <div>
                 <h2 className="text-xl-center">
-                    <img className="rounded" style={{width: 650+'px'}} src="https://readingwithannieapi.herokuapp.com/images/Annie.jpg" />
+                    <img className="rounded" style={{width: 650+'px'}} src="http://localhost:3000/images/Ammie.jpg" />
                 </h2>
                 {children}
-            </Jumbotron>
+                <footer style={{marginTop:10+"rem"}}></footer>
+            </div>
         )
     }
 }
