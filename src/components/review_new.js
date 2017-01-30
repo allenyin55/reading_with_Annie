@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { createReview } from '../actions/index';
 import { Link } from 'react-router';
-import AuthService from '../utils/AuthService'
 
 class AddReview extends Component{
 
@@ -11,23 +10,8 @@ class AddReview extends Component{
         router: PropTypes.object
     };
 
-    static propTypes = {
-        auth: PropTypes.instanceOf(AuthService)
-    };
-
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            profile: props.auth.getProfile()
-        };
-        // listen to profile_updated events to update internal state
-        props.auth.on('profile_updated', (newProfile) => {
-            this.setState({profile: newProfile})
-        })
-    }
-
     onSubmit(props){
-        const { profile } = this.state;
+        const { profile } = this.props;
         props.reviewer = profile;
         props.dateEdited = new Date().toUTCString();
         props.id = this.props.params.id;

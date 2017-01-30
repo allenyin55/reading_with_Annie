@@ -26,7 +26,11 @@ export class Login extends React.Component {
         return (
             <div className="text-xl-center">
                 <h2>Reading with Annie</h2>
-                <Button  bsStyle="primary" bsSize="large" onClick={auth.login.bind(this)}>Login</Button>
+                {/*<img src="https://readingwithannieapi.herokuapp.com/images/Annie.jpg" style={{width: 650+"px"}}/>*/}
+                {/*<img src="http://localhost:3000/images/Annie.jpg" style={{width: 650+"px"}}/>*/}
+                <div>
+                    <Button  bsStyle="primary" bsSize="large" onClick={auth.login.bind(this)}>Login</Button>
+                </div>
             </div>
         )
     }

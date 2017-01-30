@@ -12,6 +12,14 @@ td:first-of-type{
     width: 250px;
 }
 
+textarea {
+    margin-top: 10px;
+    margin-left: 50px;
+    width: 500px;
+    border-radius: 6px;
+    border-width: 2px;
+}
+
 .btn{
     margin:5px;
 }
@@ -26,4 +34,8 @@ td:first-of-type{
     color: red;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.err-text{
+    color:red;
 }

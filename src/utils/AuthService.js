@@ -10,7 +10,8 @@ export default class AuthService extends EventEmitter {
         // Configure Auth0
         this.lock = new Auth0Lock(clientId, domain, {
           theme: {
-            logo:  'https://readingwithannieapi.herokuapp.com/images/Annie.jpg',
+          /*  logo:  'https://readingwithannieapi.herokuapp.com/images/Annie.jpg',*/
+            logo: 'http://localhost:3000/images/Annie.jpg',
             primaryColor: '#31324F'
           },
           socialButtonStyle: 'small',

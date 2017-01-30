@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchABook, deleteBook, deleteReview} from '../actions/index';
 import { Link } from 'react-router';
-import AuthService from '../utils/AuthService';
 //import ReviewItem from './review_item'; deprecated
 import moment from 'moment-timezone';
 
@@ -12,23 +11,9 @@ class BookShow extends Component{
         router: PropTypes.object
     };
 
-    static propTypes = {
-        auth: PropTypes.instanceOf(AuthService)
-    };
-
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            profile: props.auth.getProfile(),
-        };
-        // listen to profile_updated events to update internal state
-        props.auth.on('profile_updated', (newProfile) => {
-            this.setState({profile: newProfile})
-        })
-    }
-
-    componentWillMount(){
-        this.props.fetchABook(this.props.params.id);
+    constructor(props){
+      super(props);
+      this.props.fetchABook(this.props.params.id);
     }
 
     onDeleteBookClick(){
@@ -51,7 +36,7 @@ class BookShow extends Component{
 
     renderReview() {
         const {reviews} = this.props.bookObject;
-        const {profile} = this.state;
+        const {profile} = this.props;
         return reviews.map((review) => {
             const uniqueKey = review.review_id; // a unique key for the li elements
             const PSTTime =moment.tz(review.dateedited, "Zulu").tz("America/Los_Angeles").format();
@@ -112,11 +97,18 @@ class BookShow extends Component{
                         </button>
                     </Link>
                     <h2 className="">There is no reivews for {book.title}</h2>
-                    <Link to={location.pathname+"/addReview"}>
-                        <button className="btn btn-primary">
-                            Add a new Review
+                    <div className="d-flex flex-column">
+                        <button
+                          className="btn btn-danger"
+                          onClick={this.onDeleteBookClick.bind(this)}>
+                            Delete Book
                         </button>
-                    </Link>
+                        <Link to={location.pathname+"/addReview"}>
+                            <button className="btn btn-primary">
+                                Add a new Review
+                            </button>
+                        </Link>
+                    </div>
                 </div>
                 )
         }
@@ -155,7 +147,7 @@ class BookShow extends Component{
 }
 
 function mapStateToProps(state) {
-    return {bookObject: state.books.book};
+  return {bookObject: state.books.book};
 }
 
 export default connect(mapStateToProps, { fetchABook, deleteBook, deleteReview})(BookShow);

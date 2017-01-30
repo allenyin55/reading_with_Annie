@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { editBook } from '../actions/index';
 import { Link } from 'react-router';
-import AuthService from '../utils/AuthService'
 
 class BookEdit extends Component{
 
@@ -11,22 +10,8 @@ class BookEdit extends Component{
         router: PropTypes.object
     };
 
-    static propTypes = {
-        auth: PropTypes.instanceOf(AuthService)
-    };
-
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            profile: props.auth.getProfile()
-        };
-        // listen to profile_updated events to update internal state
-        props.auth.on('profile_updated', (newProfile) => {
-            this.setState({profile: newProfile})
-        })
-    }
     onSubmit(props){
-        props.reviewer = this.state.profile;
+        props.reviewer = this.props.profile;
         props.review_id = location.pathname.split('/').pop();
         props.dateEdited = new Date().toUTCString();
         this.props.editBook(props)

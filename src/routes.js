@@ -1,13 +1,15 @@
 import React from 'react';
-import { Route, IndexRoute, IndexRedirect } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 import App from './components/app';
 import BookList from './components/book_list';
 import BookNew from './components/book_new';
 import BookShow from './components/book_show';
 import BookEdit from './components/book_edit';
 import AddReview from './components/review_new';
-import AuthService from './utils/AuthService'
+import AuthService from './utils/AuthService';
+import JourneyNew from "./components/journey_new";
 import Login from './components/log_in';
+import Profile from './components/profile_page';
 
 const auth = new AuthService('K2UDmb55IjNcvJMDyaVzTBWh9w6uCdb9', 'hyin775.auth0.com');
 
@@ -21,13 +23,15 @@ const requireAuth = (nextState, replace) => {
 
 const routes = (
     <Route path="/" component={App} auth={auth}>
-        <IndexRedirect to="/books" />
-        <Route path="books" component={BookList} onEnter={requireAuth}/>
-        <Route path='books/new' component={BookNew}/>
-        <Route path="books/:id" component={BookShow}/>
-        <Route path="books/:id/edit/:review_id" component={BookEdit}/>
-        <Route path="books/:id/addReview" component={AddReview}/>
-        <Route path="login" component={Login} />
+      <IndexRedirect to="/books" />
+      <Route path="books" component={BookList} onEnter={requireAuth}/>
+      <Route path='books/new' component={BookNew}/>
+      <Route path="books/:id" component={BookShow}/>
+      <Route path="books/:id/edit/:review_id" component={BookEdit}/>
+      <Route path="books/:id/addReview" component={AddReview}/>
+      <Route path="login" component={Login} />
+      <Route path="journey" component={JourneyNew} onEnter={requireAuth}/>
+      <Route path="profile" component={Profile} />
     </Route>
 );
 

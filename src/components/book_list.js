@@ -1,11 +1,9 @@
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { fetchBooks } from '../actions/index';
-import {Button} from 'react-bootstrap'
-import AuthService from '../utils/AuthService'
+import {Button} from 'react-bootstrap';
 import { Link } from 'react-router';
 import moment from 'moment-timezone';
-import { StickyContainer, Sticky } from 'react-sticky';
 
 class BooksList extends Component {
 
@@ -13,20 +11,9 @@ class BooksList extends Component {
     router: T.object
   };
 
-  static propTypes = {
-    auth: T.instanceOf(AuthService)
-  };
-
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.props.fetchBooks(); //fetch the data from the postgres server
-    this.state = {
-      profile: props.auth.getProfile(),
-    };
-    // listen to profile_updated events to update internal state
-    props.auth.on('profile_updated', (newProfile) => {
-      this.setState({profile: newProfile})
-    })
   }
 
   logout(){
@@ -39,12 +26,13 @@ class BooksList extends Component {
       padding: 15+"px",
       margin: 15+"px"
     };
+
     return this.props.books.map((book) => {
       return(
         <div key={book.id} style={style}>
           <div>
             <div>
-              <image src={
+             <image src={
               book.bookinfo.items[0].volumeInfo.imageLinks.thumbnail}
                         style={{width: 128+"px",
                           height: 193+"px"}}/>
@@ -53,7 +41,9 @@ class BooksList extends Component {
               {book.title}
             </Link>
           </div>
-          <div>{book.bookinfo.items[0].volumeInfo.authors[0]}</div>
+          {(book.bookinfo.items[0].volumeInfo.authors !== undefined)
+            ? (<div>{book.bookinfo.items[0].volumeInfo.authors[0]}</div>)
+            : (<div>No author</div>)}
           <div>{moment.tz(book.dateadded, "Zulu").tz("America/Los_Angeles").format().substring(0, 10)} added</div>
         </div>
       );
@@ -61,7 +51,7 @@ class BooksList extends Component {
   }
 
   render(){
-    const { profile } = this.state;
+    const { profile } = this.props;
     const{ books } = this.props;
     const navStyle = {
       width: 85+"%",
@@ -86,7 +76,9 @@ class BooksList extends Component {
             <h2 style={{marginTop:10+"px"}} className="col">Reading with Annie</h2>
             <div className="col" style={{textAlign: "right"}}>
               <div style={{display: "inline-block"}}>Welcome, {profile.given_name}</div>
-              <img className="align-self-start headShot" src={profile.picture}/>
+              <Link to="/profile">
+                <img className="align-self-start headShot" src={profile.picture}/>
+              </Link>
               <div style={{display: "inline-block"}}>
                 <Button bsStyle="danger" onClick={this.logout.bind(this)}>Logout</Button>
               </div>
@@ -96,7 +88,10 @@ class BooksList extends Component {
         <div style={{paddingTop: 70+"px"}} >
           <div className="col" style={{textAlign: "center", marginTop: 8+"px"}}>
             <Link to="/books/new" className="btn btn-primary">
-              Add a Book
+              Add a Book Review
+            </Link>
+            <Link to="/journey" className="btn btn-primary">
+              Start Reading a Book
             </Link>
           </div>
           <div className="d-flex align-content-start flex-wrap">
