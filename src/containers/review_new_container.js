@@ -1,38 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { editBook } from '../actions/index';
+import { createReview } from '../actions/index';
 import { Link } from 'react-router';
-import AuthService from '../utils/AuthService'
 
-class BookEdit extends Component{
+class AddReview extends Component{
 
     //like props, don't abuse it. Only use it with router
     static contextTypes = {
         router: PropTypes.object
     };
 
-    static propTypes = {
-        auth: PropTypes.instanceOf(AuthService)
-    };
-
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            profile: props.auth.getProfile()
-        };
-        // listen to profile_updated events to update internal state
-        props.auth.on('profile_updated', (newProfile) => {
-            this.setState({profile: newProfile})
-        })
-    }
     onSubmit(props){
-        props.reviewer = this.state.profile;
-        props.review_id = location.pathname.split('/').pop();
+        const { profile } = this.props;
+        props.reviewer = profile;
         props.dateEdited = new Date().toUTCString();
-        this.props.editBook(props)
+        props.id = this.props.params.id;
+        this.props.createReview(props)
             .then(()=>{
                 //blog Book has been created, navigate the user to the index
-                this.context.router.push("/books/"+this.props.bookObject.book.id);
+                this.context.router.push("/books/"+props.id);
             });
     }
 
@@ -40,9 +26,13 @@ class BookEdit extends Component{
 
         const { fields:{review}, handleSubmit } = this.props;
 
+        if(!this.props.bookObject){ // try to figure out why do I need this and how does data flow!!
+            return <div>Loading...</div>
+        }
+
         return(
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <h3>Edit your review</h3>
+                <h3>Add a review on {this.props.bookObject.book.title}</h3>
                 <div className={`form-group ${review.touched && review.invalid ? 'has-danger' : ''}`}>
                     <label>review</label>
                     <textarea className="form-control" { ...review }/>
@@ -52,7 +42,7 @@ class BookEdit extends Component{
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>
-                <Link to={`/books/${this.props.bookObject.book.id}`} className="btn btn-danger">Cancel</Link>
+                <Link to="/" className="btn btn-danger">Cancel</Link>
             </form>
         );
     }
@@ -82,4 +72,4 @@ export default reduxForm({
     form: 'BooksNewForm',
     fields: ['review'],
     validate
-}, mapStateToProps, { editBook})(BookEdit);
+}, mapStateToProps, { createReview })(AddReview);

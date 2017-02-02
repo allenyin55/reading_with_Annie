@@ -11,16 +11,31 @@ td:first-of-type{
     height: 200px;
     width: 250px;
 }
+
+textarea {
+    margin-top: 10px;
+    margin-left: 50px;
+    width: 500px;
+    border-radius: 6px;
+    border-width: 2px;
+}
+
 .btn{
     margin:5px;
 }
 
 .headShot{
     width: 66px;
+    padding: 8px;
+    border-radius: 50%;
 }
 
 #delete_review:hover{
     color: red;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.err-text{
+    color:red;
 }

@@ -8,8 +8,14 @@ import routes from './routes';
 import promise from 'redux-promise';
 import thunkMiddleware from 'redux-thunk'
 import {persistStore, autoRehydrate} from 'redux-persist';
+import createLogger from 'redux-logger';
 
-const store = createStore(reducers, {},compose(autoRehydrate(), applyMiddleware(promise, thunkMiddleware)));
+const logger = createLogger();
+const composeEnhancers = process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, {},
+  composeEnhancers(autoRehydrate(), applyMiddleware(promise, thunkMiddleware, logger)));
+
+
 persistStore(store);
 //qpersistStore(store, config, callback).purge() //this is to purge all the saved states in the local storage
 

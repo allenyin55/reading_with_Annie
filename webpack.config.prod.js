@@ -17,9 +17,10 @@ module.exports = {
         presets: ['react', 'es2015', 'stage-1']
       }
     },{
-        include: /\.json$/,
-        loaders: ['json-loader']
-    }
+      include: /\.json$/,
+      loaders: ['json-loader']
+    },
+      { test: /\.css$/, loader: "style!css" },
     ]
   },
   resolve: {
@@ -29,12 +30,12 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './'
   },
-    plugins: [
-            new webpack.DefinePlugin({
-                "process.env": {
-                    NODE_ENV: JSON.stringify("production")
-                }
-            }),
-            new webpack.optimize.DedupePlugin()
-        ]
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    }),
+    new webpack.optimize.DedupePlugin()
+  ]
 };

@@ -8,7 +8,12 @@ export const EDIT_BOOK = "EDIT_BOOK";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const GET_BOOK_INFO = "GET_BOOK_INFO";
-const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books';
+export const CREATE_JOURNEY = "CREATE_JOURNEY";
+export const GET_USER_BOOKS = "GET_USER_BOOKS";
+// for production const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books';
+const POSTGRES_SERVER_URL = 'http://localhost:3000/api/books';
+const POSTGRES_SERVER_URL_JOURNEY = "http://localhost:3000/api/journey";
+const POSTGRES_SERVER_URL_PROFILE = "http://localhost:3000/api/profile";
 const GOOGLE_BOOK_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 const GOOGLE_BOOK_API_KEY = "AIzaSyCJN2MfmPezrjAR1Ji02fO-Lwtmp0Umt_c";
 
@@ -60,7 +65,6 @@ export function editBook(props) {
 
 export function deleteReview(book) {
 
-    console.log(`${POSTGRES_SERVER_URL}/${book.book_id}/deleteReview`);
     const request = axios.post(`${POSTGRES_SERVER_URL}/${book.book_id}/deleteReview`, book);
 
     return{
@@ -87,3 +91,20 @@ export function getBookInfo(title) {
     }
 }
 
+export function createJourney(props) {
+  const request = axios.post(POSTGRES_SERVER_URL_JOURNEY, props);
+
+  return{
+    type: CREATE_JOURNEY,
+    payload: request
+  }
+}
+
+export function getUserBooks(props) {
+  const request = axios.post(POSTGRES_SERVER_URL_PROFILE, props);
+
+  return{
+    type: GET_USER_BOOKS,
+    payload: request
+  }
+}

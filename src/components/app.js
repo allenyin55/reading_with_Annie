@@ -1,27 +1,32 @@
-import React, { PropTypes as T } from 'react'
-import { Jumbotron } from 'react-bootstrap'
+import React, { PropTypes as T } from 'react';
+import NavBar from '../components/nav_bar_component';
 
 export default class App extends React.Component {
-    static contextTypes = {
-        router: T.object
-    };
 
-    render() {
-        let children = null;
-        if (this.props.children) {
-            children = React.cloneElement(this.props.children, {
-                auth: this.props.route.auth //sends auth instance to children
-            })
-        }
+  static contextTypes = {
+    router: T.object
+  };
 
-        return (
-            <div>
-                <h2 className="text-xl-center">
-                    <img className="rounded" style={{width: 650+'px'}} src="https://readingwithannieapi.herokuapp.com/images/Ammie.jpg" />
-                </h2>
-                {children}
-                <footer style={{marginTop:10+"rem"}}></footer>
-            </div>
-        )
+  logout(){
+    this.props.route.auth.logout();
+    this.context.router.push('/login');
+  }
+
+  render() {
+    let children = null;
+    if (this.props.children) {
+      children = React.cloneElement(this.props.children, {
+        logOut: this.logout.bind(this),
+        auth: this.props.route.auth, //sends auth instance to children
+        profile:this.props.route.auth.getProfile()
+      })
     }
+
+    return (
+      <div>
+        <NavBar profile={this.props.route.auth.getProfile()} logOut={this.logout.bind(this)}/>
+        {children}
+      </div>
+    )
+  }
 }
