@@ -1,6 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import fetchJsonp from 'fetch-jsonp';
+const GOOGLE_BOOK_API_SEARCH = "https://www.googleapis.com/books/v1/volumes?q=";
 const GOOGLE_BOOK_API_KEY = "AIzaSyCJN2MfmPezrjAR1Ji02fO-Lwtmp0Umt_c";
 import Radium from'radium';
 
@@ -66,15 +67,15 @@ class AutoSuggest extends React.Component {
       });
     }
 
-    fetchJsonp(`https://www.googleapis.com/books/v1/volumes?q=${value}}&key=${GOOGLE_BOOK_API_KEY}`)
+    fetchJsonp(`${GOOGLE_BOOK_API_SEARCH}${value}&key=${GOOGLE_BOOK_API_KEY}`)
       .then((response) => response.json())
       .then((json) => {
         let books = [];
-        console.log(json);
         json.items.map((aBook) => {
           books.push(
             { title: aBook.volumeInfo.title,
               author: (aBook.volumeInfo.authors !== undefined) ? aBook.volumeInfo.authors[0] : "No author",
+              id: aBook.id,
               imgUrl: (aBook.volumeInfo.imageLinks !== undefined) ? aBook.volumeInfo.imageLinks.thumbnail : null
             }
           );
@@ -100,6 +101,11 @@ class AutoSuggest extends React.Component {
     });
   };
 
+  // choose which item on the suggestion list is selected
+  onSuggestionSelected = (e, {suggestionIndex}) =>{
+    this.props.onSuggestionSelected(this.state.suggestions[suggestionIndex].id);
+  };
+
   //onChange along with onBlur and onFocus has to be called
   //again here to trigger the corresponding event for redux-form
   //Also, when onChange(autoComplete's onChange, that is) is called,
@@ -115,7 +121,7 @@ class AutoSuggest extends React.Component {
     const { value, suggestions,isLoading } = this.state;
     const { meta, input, ...props} = this.props;
     const styles = this.getStyles();
-    const status = (isLoading ? 'Loading...' : 'Type to load suggestions');
+    //used for status const status = (isLoading ? 'Loading...' : 'Type to load suggestions');
     // Autosuggest will pass through all these props to the input element.
     const inputProps = {
       value,
@@ -160,6 +166,7 @@ class AutoSuggest extends React.Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected = {this.onSuggestionSelected}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
