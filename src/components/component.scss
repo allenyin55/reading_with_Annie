@@ -1,0 +1,34 @@
+@import '../app.scss';
+
+.nav_bar{
+	width: 85%;
+	height: 4rem;
+	background: #fff;
+	border-top: 1px solid #cfcfcf;
+	border-bottom: 1px solid #cfcfcf;
+	position: fixed;
+	vertical-align: middle;
+	z-index: 100
+}
+
+.nav_bar_brand{
+	margin-top: 10px; 
+}
+
+.headShot {
+	width: 66px;
+	padding: 8px;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 50%;
+}
+
+.delete_review:hover {
+	color: $red;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.bookshelf_item{
+	margin: 15px;
+	padding: 15px;
+}
