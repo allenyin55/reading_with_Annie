@@ -20,9 +20,9 @@ const BookDisplay = ({ book, isInList }) => {
   if (isInList) {
     if (NoInfo) {
       return (
-        <Link to={`books/${book.id}`}>
+        <div>
           {book.title}
-        </Link>);
+        </div>);
     }
 
     return (

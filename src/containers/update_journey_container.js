@@ -26,7 +26,6 @@ class UpdateJourney extends React.Component{
   }
 
 	onChange(val){
-		console.log(val)
 		this.setState({
 			reading_status: val.value
 		})
@@ -34,11 +33,11 @@ class UpdateJourney extends React.Component{
 
 	onSubmit(props){
 		props.reading_status = this.state.reading_status;
+		console.log(this.props.book)
 		props.book_id = this.props.params.id;
 		props.profile_id = this.props.book.user_stats.profile_id;
 		this.props.updateJourney(props)
 		.then(() => {
-			console.log('adf')
 			this.context.router.push("/profile");
 		})
 	}

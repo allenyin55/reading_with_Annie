@@ -51,6 +51,7 @@ class Profile extends React.Component {
     }
 
     const books = this.mapUserStatsToBooks(user_reading_info);
+    console.log(books)
    
     if (books.length === 0) {
       return (

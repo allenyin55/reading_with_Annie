@@ -22,6 +22,7 @@ class JourneyNew extends React.Component{
     this.state = {
       selectedStatus: "1",
       selectedItemId: null,
+      selectedFeeling: 0,
       note: "",
     };
   }
@@ -34,7 +35,9 @@ class JourneyNew extends React.Component{
   }
 
   onRatingChange(rate){
-    this.props.selectedFeeling = rate;
+    this.setState({
+      selectedFeeling: rate
+    })
   }
 
   onNoteChange(e){
@@ -46,7 +49,7 @@ class JourneyNew extends React.Component{
   onSubmit(props){
     props.dateAdded = new Date().toUTCString();
     props.startingDate = new Date().toUTCString();
-    props.initial_feeling = this.props.selectedFeeling;
+    props.initial_feeling = this.state.selectedFeeling;
     props.final_feeling = '0';  //this means it's unset. It's string because we have parseInt() in the backend
     props.reading_status = '0'; //meaning just start readign
     props.note = this.state.note;
@@ -80,6 +83,7 @@ class JourneyNew extends React.Component{
   render(){
 
     const { handleSubmit } = this.props;
+    console.log(this.state.selectedFeeling)
 
     return(
      <form styleName="center_input" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -93,6 +97,7 @@ class JourneyNew extends React.Component{
          <h5>How excited are you about this book?</h5>
          <div>
           <Rating 
+            initialRate={this.state.selectedFeeling}
             empty={<img src='/images/flame_empty.png'/>}
             full={<img src='/images/flame_full.png'/>}
             fractions = '10' 
