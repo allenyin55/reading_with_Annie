@@ -82,6 +82,7 @@
     "redux-logger": "^2.7.4",
     "redux-persist": "^4.0.1",
     "redux-promise": "^0.5.3",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "webpack": "^2.2.1"
   }
 }
