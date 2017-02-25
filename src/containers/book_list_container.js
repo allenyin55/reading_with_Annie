@@ -28,22 +28,25 @@ class BooksList extends Component {
 
     return (
       <div styleName='app_container'>
-        <div>
-          <div className="col" styleName='books_list'>
+        <div className="row">
+          <div className="col-9">
+            <div styleName='books_list'>
             <Link to="/books/new" className="btn btn-primary" styleName="btn">
               Add a Book Review
             </Link>
             <Link to="/journey" className="btn btn-primary" styleName="btn">
               Start Reading a Book
             </Link>
+            </div>
+            <div className="d-flex align-content-start flex-wrap">
+              {books.map(book =>
+                <Link to={`books/${book.id}`} key={book.id} styleName="a_book hvr-float">
+                  <BookDisplay book={book} isInList />
+                </Link>,
+              )}
+            </div>
           </div>
-          <div className="d-flex align-content-start flex-wrap">
-            {books.map(book =>
-              <Link to={`books/${book.id}`} key={book.id} styleName="a_book hvr-float">
-                <BookDisplay book={book} isInList />
-              </Link>,
-            )}
-          </div>
+          <div className="col-3">asdf</div>
         </div>
         <footer/>
       </div>

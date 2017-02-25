@@ -18,12 +18,41 @@ textarea {
 	padding-top: 6rem;
 }
 
+.clickable:hover{
+	cursor: pointer;
+}
+
+.delete_btn:hover {
+	color: $red;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 .some_space{
 	margin-top: 45px;
 }
 
 .same_line{
 	display: inline-block;
+}
+
+.headShot {
+	width: 66px;
+	padding: 8px;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 50%;
+}
+
+.big_headshot{
+	width: 77px;
+	padding: 6px;
+	border-radius: 25%;
+}
+
+.smaller_headshot{
+	width: 55px;
+	padding: 6px;
+	border-radius: 25%;
 }
 
 .btn {

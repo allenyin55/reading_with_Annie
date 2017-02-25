@@ -51,7 +51,6 @@ class Profile extends React.Component {
     }
 
     const books = this.mapUserStatsToBooks(user_reading_info);
-    console.log(books)
    
     if (books.length === 0) {
       return (
@@ -60,9 +59,10 @@ class Profile extends React.Component {
       </div>
       );
     }
+    
     return (
       <div styleName="app_container">
-        <img styleName="same_line" src={profile.picture}/>
+        <img styleName="same_line big_headshot" src={profile.picture_large}/>
         <h2 styleName="same_line">{profile.name}'s book shelf</h2>
         <div styleName="some_space" className="d-flex align-content-start flex-wrap">
            {books.map(book => (
@@ -87,5 +87,5 @@ function mapStateToProps(state) {
   };
 }
 
-const ProfileWithCSS = CSSModules(Profile, styles);
+const ProfileWithCSS = CSSModules(Profile, styles,  {allowMultiple: true});
 export default connect(mapStateToProps, { getUserBooks, fetchABook, selectBook })(ProfileWithCSS);

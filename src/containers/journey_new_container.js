@@ -83,7 +83,6 @@ class JourneyNew extends React.Component{
   render(){
 
     const { handleSubmit } = this.props;
-    console.log(this.state.selectedFeeling)
 
     return(
      <form styleName="center_input" onSubmit={handleSubmit(this.onSubmit.bind(this))}>

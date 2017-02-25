@@ -1,6 +1,8 @@
-import { FETCH_BOOKS, FETCH_A_BOOK, GET_BOOK_INFO, GET_GUESSED_BOOK_INFO, SELECT_BOOK } from '../actions/index';
+import { FETCH_BOOKS, FETCH_A_BOOK, GET_BOOK_INFO, GET_NOTES, GET_WORD_DEF, GET_WORDS,
+         GET_GUESSED_BOOK_INFO, SELECT_BOOK, GET_COMMENTS } from '../actions/index';
 import { REHYDRATE } from 'redux-persist/constants';
-const INITIAL_STATE = { all: [], book: null, bookInfo: [], bookSelected: null };
+const INITIAL_STATE = { all: [], book: null, bookInfo: [], wordDef: [], words: [],
+                        bookSelected: null, comments: [], notes: [] };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -18,12 +20,21 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, bookInfo: action.payload.data.items[0] };
     case SELECT_BOOK:
       return {...state, bookSelected: action.payload}
+    case GET_COMMENTS:
+      return {...state, comments: action.payload.data.data }
+    case GET_NOTES:
+      return {...state, notes: action.payload.data.data}
+    case GET_WORDS:
+      return {...state, words: action.payload.data.data}
+    case GET_WORD_DEF:
+      return {...state, wordDef: action.payload.data.data}
     case REHYDRATE:
       const incoming = action.payload.books;
       if (incoming === undefined) return state;
       const all = incoming.all;
       const bookInfo = incoming.bookInfo;
-      if (incoming) return { ...state, all, bookInfo };
+      const bookSelected = incoming.bookSelected;
+      if (incoming) return { ...state, all, bookInfo, bookSelected };
       return state;
     default:
       return state;

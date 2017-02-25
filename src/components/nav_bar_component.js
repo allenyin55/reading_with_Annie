@@ -19,7 +19,7 @@ const NavBar = ({ profile, logOut }) => {
         <div className="col" style={{ textAlign: 'right' }}>
           <div style={{ display: 'inline-block' }}>Welcome, {profile.given_name}</div>
           <Link to="/profile">
-            <img styleName='headShot' src={profile.picture} />
+            <img styleName='headShot' src={profile.picture_large} />
           </Link>
           <div style={{ display: 'inline-block' }}>
             <Button bsStyle="danger" onClick={logOut}>Logout</Button>

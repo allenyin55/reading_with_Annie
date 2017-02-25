@@ -15,20 +15,39 @@
 	margin-top: 10px; 
 }
 
-.headShot {
-	width: 66px;
-	padding: 8px;
-	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
-	border-radius: 50%;
-}
-
-.delete_review:hover {
-	color: $red;
-	cursor: pointer;
-	text-decoration: underline;
-}
-
 .bookshelf_item{
 	margin: 15px;
 	padding: 15px;
+}
+
+.book_cover{
+	width: 96px;
+}
+
+.big_book_cover{
+	width: 128px;
+}
+
+.review_item{
+	margin-bottom: 10px;
+	padding: 10px;
+}	
+
+.indented_comment{
+	padding-left: 50px;
+	padding-right: 0;
+	width: 100%;
+	border: 0;
+}
+
+.review_widget{
+	border: 0;
+}
+
+.reply_wrapper{
+	width: 100%;
+}
+
+.word_def{
+	margin-top: 15px;
 }

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment-timezone';
+import Rating from 'react-rating';
 import ZulutoPST from '../utils/ZulutoPST.js';
+import CSSModules from 'react-css-modules';
+import styles from './component.scss'
 
 const BookDisplay = ({ book, isInList }) => {
 
@@ -33,7 +36,7 @@ const BookDisplay = ({ book, isInList }) => {
               src={
               book.bookinfo.volumeInfo.imageLinks.thumbnail}
               alt="No Cover Image Available"
-              style={{ width: `${128}px` }}
+              styleName="book_cover"
             />
           </div>
           <div>
@@ -43,6 +46,13 @@ const BookDisplay = ({ book, isInList }) => {
         {(book.bookinfo.volumeInfo.authors !== undefined)
           ? (<div>{book.bookinfo.volumeInfo.authors[0]}</div>)
           : (<div>No author</div>)}
+        <Rating 
+          placeholderRate={ book.avg_rating }
+          empty={<img src='/images/star_grey.png'/>}
+          placeholder={<img src='/images/star_yellow.png'/>}
+          fractions = {10}
+          readonly = {true}
+        />
         <div>{ ZulutoPST(book.dateadded) } added</div>
       </div>
     );
@@ -66,9 +76,16 @@ const BookDisplay = ({ book, isInList }) => {
             src={
             book.bookinfo.volumeInfo.imageLinks.thumbnail}
             alt="No Cover Image available"
-            style={{ width: `${128}px` }}
+            styleName="big_book_cover"
           />
         </div>
+        <Rating 
+          placeholderRate={ book.avg_rating }
+          empty={<img src='/images/star_grey.png'/>}
+          placeholder={<img src='/images/star_yellow.png'/>}
+          fractions = {10}
+          readonly = {true}
+        />
       </div>
       {(book.bookinfo.volumeInfo.description.length < 400) ? (<p>{book.bookinfo.volumeInfo.description}</p>)
         : (<p>{book.bookinfo.volumeInfo.description.slice(0, 399)}......</p>)}
@@ -76,4 +93,4 @@ const BookDisplay = ({ book, isInList }) => {
   );
 };
 
-export default BookDisplay;
+export default  CSSModules(BookDisplay, styles);

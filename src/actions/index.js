@@ -13,13 +13,29 @@ export const CREATE_JOURNEY = 'CREATE_JOURNEY';
 export const GET_USER_BOOKS = 'GET_USER_BOOKS';
 export const SELECT_BOOK = "SELECT_BOOK";
 export const UPDATE_JOURNEY = "UPDATE_JOUNEY";
+export const CREATE_COMMENT = "CREATE_COMMENT";
+export const GET_COMMENTS = "GET_COMMENTS";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const GET_NOTES = "GET_NOTES";
+export const CREATE_NOTE = "CREATE_NOTE";
+export const EDIT_NOTE = "EDIT_NOTE";
+export const DELETE_NOTE = "DELETE_NOTE";
+export const GET_WORDS = "GET_WORDS";
+export const CREATE_WORD = "CREATE_WORD";
+export const DELETE_WORD = "DELETE_WORD";
+export const GET_WORD_DEF = "GET_WORD_DEf";
 // for production const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books';
-const POSTGRES_SERVER_URL = 'https://readingwithannieapi.herokuapp.com/api/books';
-const POSTGRES_SERVER_URL_JOURNEY = 'https://readingwithannieapi.herokuapp.com/api/journey';
-const POSTGRES_SERVER_URL_PROFILE = 'https://readingwithannieapi.herokuapp.com/api/profile';
+const POSTGRES_SERVER_URL = 'http://localhost:3000/api/books';
+const POSTGRES_SERVER_URL_JOURNEY = 'http://localhost:3000/api/journey';
+const POSTGRES_SERVER_URL_PROFILE = 'http://localhost:3000/api/profile';
+const POSTGRES_SERVER_URL_NOTES = 'http://localhost:3000/api/notes';
+const POSTGRES_SERVER_URL_WORDS = 'http://localhost:3000/api/words';
 const GOOGLE_BOOK_URL = 'https://www.googleapis.com/books/v1/volumes/';
 const GOOGLE_SEARCH_BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes?q=';
 const GOOGLE_BOOK_API_KEY = 'AIzaSyCJN2MfmPezrjAR1Ji02fO-Lwtmp0Umt_c';
+const OXFORD_DIC_URL = 'https://od-api.oxforddictionaries.com/api/v1/en/';
+const OXFORD_APP_ID = '1b843d1e';
+const OXFORD_APP_KEY = '1dcd9eb3927afb2415fc4ac331d8f2d8';
 
 
 export function fetchBooks() {
@@ -133,6 +149,107 @@ export function updateJourney(props){
 
   return{
     type: UPDATE_JOURNEY,
+    payload: request
+  }
+}
+
+export function createComment(props){
+  const request = axios.post(`${POSTGRES_SERVER_URL}/${props.review_id}/addComment`, props);
+
+  return{
+    type: CREATE_COMMENT,
+    payload: request
+  }
+}
+
+export function deleteComment(comment_id){
+  const request = axios.post(`${POSTGRES_SERVER_URL}/deleteComment/${comment_id}`);
+
+  return{
+    type: CREATE_COMMENT,
+    payload: request
+  }
+}
+
+export function getComments(book_id){
+  const request = axios.get(`${POSTGRES_SERVER_URL}/${book_id}/comments`);
+
+  return{
+    type: GET_COMMENTS,
+    payload: request
+  }
+}
+
+export function getNotes(props){
+  const request = 
+  axios.get(`${POSTGRES_SERVER_URL_NOTES}/${props.book_id}?profile_id=${props.profile_id}`)
+
+  return {
+    type: GET_NOTES,
+    payload: request
+  }
+}
+
+export function createNote(props){
+  const request = axios.post(`${POSTGRES_SERVER_URL_NOTES}`, props)
+
+  return{
+    type: CREATE_NOTE,
+    payload: request
+  }
+}
+
+export function editNote(props){
+  const request = axios.post(`${POSTGRES_SERVER_URL_NOTES}/${props.note_id}`, props)
+
+  return{
+    type: EDIT_NOTE,
+    payload: request
+  }
+}
+
+export function deleteNote(note_id){
+  const request = axios.delete(`${POSTGRES_SERVER_URL_NOTES}/${note_id}`)
+
+  return{
+    type: DELETE_NOTE,
+    payload: request
+  }
+}
+
+export function getWords(props){
+  const request = 
+  axios.get(`${POSTGRES_SERVER_URL_WORDS}/${props.book_id}?profile_id=${props.profile_id}`)
+
+  return {
+    type: GET_WORDS,
+    payload: request
+  }
+}
+
+export function createWord(props){
+  const request = axios.post(`${POSTGRES_SERVER_URL_WORDS}`, props)
+
+  return{
+    type: CREATE_WORD,
+    payload: request
+  }
+}
+
+export function deleteWord(word_id){
+  const request = axios.delete(`${POSTGRES_SERVER_URL_WORDS}/${word_id}`)
+
+  return{
+    type: DELETE_WORD,
+    payload: request
+  }
+}
+
+export function getWordDef(word){
+  const request = axios.get(`${POSTGRES_SERVER_URL_WORDS}/def/${word}`)
+
+  return{
+    type: GET_WORD_DEF,
     payload: request
   }
 }

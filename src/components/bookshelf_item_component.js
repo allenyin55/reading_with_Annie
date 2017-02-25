@@ -30,11 +30,9 @@ const BookshelfItem = ({book}) => {
 
   const { user_stats } = book;
 
-  console.log(book.bookinfo.volumeInfo.title, user_stats.book_id, user_stats.reading_status)
-
   return (
     <div styleName="bookshelf_item">
-      <h5>{book.title}</h5>
+      <h6>{book.title}</h6>
       {(book.bookinfo.volumeInfo.authors !== undefined)
         ? (<div>by {book.bookinfo.volumeInfo.authors[0]}</div>)
         : (<div>No author</div>)}
@@ -44,7 +42,7 @@ const BookshelfItem = ({book}) => {
             src={
             book.bookinfo.volumeInfo.imageLinks.thumbnail}
             alt="No Cover Image Available"
-            style={{ width: `${128}px` }}
+            styleName="book_cover"
           />
         </div>
       </div>

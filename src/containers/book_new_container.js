@@ -5,6 +5,7 @@ import { createBook, getBookInfo, getGuessedBookInfo } from '../actions/index';
 import { Link } from 'react-router';
 import AddReviews from '../components/add_reviews_component';
 import SearchBooks from '../components/search_books_component';
+import Rating from 'react-rating';
 import validate from '../utils/form_validate';
 import CSSModules from 'react-css-modules';
 import styles from './container.scss';
@@ -20,10 +21,24 @@ class BooksNew extends Component{
     super();
 
     this.state = {
-      selectedItemId: null
+      selectedItemId: null,
+      selectedRating: 0
     }
   }
 
+  // to get the index of the selected item from the auto-complete child component
+  getSelectedItemId(itemId){
+    this.setState({
+      selectedItemId: itemId
+    })
+  }
+
+
+  onRatingChange(rate){
+    this.setState({
+      selectedRating: rate
+    })
+  }
 
   onSubmit(props){
         const { profile } = this.props;
@@ -31,6 +46,7 @@ class BooksNew extends Component{
         props.dateAdded = new Date().toUTCString();
         props.dateEdited = new Date().toUTCString();
         props.selectedId = this.state.selectedItemId;
+        props.rating = this.state.selectedRating;
         //if props.selectedId is null, do the search books
         //through getGuessedBookInfo with props.title
         if (props.selectedId === null) {
@@ -44,6 +60,7 @@ class BooksNew extends Component{
                 })
             });
         }
+
         else{
           this.props.getBookInfo(props.selectedId)
             .then(()=>{
@@ -57,13 +74,6 @@ class BooksNew extends Component{
         }
     }
 
-    // to get the index of the selected item from the auto-complete child component
-  getSelectedItemId(itemId){
-    this.setState({
-      selectedItemId: itemId
-    })
-  }
-
     render(){
       const { handleSubmit } = this.props;
 
@@ -73,6 +83,15 @@ class BooksNew extends Component{
           <div styleName="some_space">
             <h5>Title</h5>
             <SearchBooks onSuggestionSelected={this.getSelectedItemId.bind(this)}/>
+          </div>
+          <div styleName="some_space">
+            <h5>Rating</h5>
+            <Rating 
+            initialRate={this.state.selectedRating}
+            empty={<img src='/images/star_grey.png'/>}
+            full={<img src='/images/star_yellow.png'/>}
+            fractions = '10' 
+            onChange={this.onRatingChange.bind(this)}/>
           </div>
           <h5 styleName="some_space">review</h5>
           <AddReviews/>
